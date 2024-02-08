@@ -22,26 +22,98 @@ function inicializarSimulacion(numeroProcesos) {
     return procesos
 }
 
+/*
 function simular(procesos) {
+    console.log("Simulando.")
     const procesosTerminados = []
-    const listaHTML = document.getElementById("listaProcesos")
+    const tabla = document.getElementById("tablaRoundRobin")
+
+    let numeroCiclo = 1
 
     while (procesosTerminados.length < procesos.length) {
+        let fila = tabla.insertRow()
+        let celda = fila.insertCell()
+        celda.outerHTML = `<th colsPan = "2">Ciclo ${numeroCiclo}</th>`
+
+        fila = tabla.insertRow()
+        fila.insertCell(0).outerHTML = "<th>Proceso</th>"
+        fila.insertCell(1).outerHTML = "<th>Comando</th>"
+
         procesos.forEach(p => {
-            const elementoLista = document.createElement("li")
+            fila = tabla.insertRow()
+            fila.insertCell(0).textContent = `Proceso ${p.numero}`
 
             if (p.lista.length == 0) {
-                elementoLista.textContent = `Proceso ${p.numero} terminado.`
+                fila.insertCell(1).textContent = `Proceso ${p.numero} terminado.`
                 if (!procesosTerminados.includes(p.numero)) procesosTerminados.push(p.numero)
             } else {
-                elementoLista.textContent = `Proceso ${p.numero} - ${p.lista.shift()}`
+                fila.insertCell(1).textContent = `${p.lista.shift()}`
             }
-
-            listaHTML.appendChild(elementoLista)
         })
+
+        numeroCiclo += 1
+    }
+}*/
+
+function simular(procesos) {
+    console.log("Simulando.")
+
+    const procesosTerminados = []
+    const contenedor = document.getElementById("tablasRoundRobin")
+
+    let numeroCiclo = 1
+
+    while (procesosTerminados.length < procesos.length) {
+        // Crear una nueva tabla en cada iteración
+        const tabla = document.createElement("table")
+        tabla.id = `tablaRoundRobin${numeroCiclo}`
+        contenedor.appendChild(tabla)
+
+        let fila = tabla.insertRow()
+        let celda = fila.insertCell()
+        celda.outerHTML = `<th colsPan="2">Ciclo ${numeroCiclo}</th>`
+
+        fila = tabla.insertRow()
+        fila.insertCell(0).outerHTML = "<th>Proceso</th>"
+        fila.insertCell(1).outerHTML = "<th>Comando</th>"
+
+        procesos.forEach(p => {
+            fila = tabla.insertRow()
+            fila.insertCell(0).textContent = `Proceso ${p.numero}`
+
+            if (p.lista.length == 0) {
+                fila.insertCell(1).textContent = `Proceso ${p.numero} terminado.`
+                if (!procesosTerminados.includes(p.numero)) procesosTerminados.push(p.numero)
+            } else {
+                fila.insertCell(1).textContent = `${p.lista.shift()}`
+            }
+        })
+
+        numeroCiclo += 1
     }
 }
 
-const numeroProcesos = prompt("Ingresa el número de procesos.") || 0
+function desplegarInfoProcesos(procesos) {
+    const tabla = document.getElementById("tablaProcesos")
+
+    procesos.forEach(p => {
+        const fila = tabla.insertRow()
+        fila.insertCell(0).textContent = `Proceso ${p.numero}`
+
+        const listaComandos = document.createElement("ul")
+
+        p.lista.forEach(c => {
+            const elemento = document.createElement("li")
+            elemento.textContent = c
+            listaComandos.appendChild(elemento)
+        })
+
+        fila.insertCell(1).appendChild(listaComandos)
+    })
+}
+
+const numeroProcesos = 5 //prompt("Ingresa el número de ciclos") || 0
 const procesos = inicializarSimulacion(numeroProcesos)
+
+desplegarInfoProcesos(procesos)
 simular(procesos)

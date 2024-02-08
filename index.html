@@ -1,12 +1,42 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Meta 1.3</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <h1>RoundRobin.</h1>
-    <ul id = "listaProcesos"></ul>
-    <script src = "roundrobin.js"></script>
-  </body>
+<head>
+  <title>Meta 1.3</title>
+  <meta charset="utf-8">
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    th {
+      background-color: rgba(65, 124, 156, 0.3)
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 55px;
+    }
+
+    body {
+      font-family: "Helvetica";
+    }
+  </style>
+</head>
+
+<body>
+  <h1>RoundRobin.</h1>
+  <h2>Procesos</h2>
+  
+  <table id="tablaProcesos">
+    <tr>
+      <th>Proceso</th>
+      <th>Comandos</th>
+    </tr>
+  </table>
+
+  <h2>Ciclo RoundRobin</h2>
+  <div id = "tablasRoundRobin"></div>
+  
+  <script src="roundrobin.js"></script>
+</body>
 </html>
