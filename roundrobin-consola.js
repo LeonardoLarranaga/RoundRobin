@@ -1,23 +1,22 @@
-const comandos = ["console.log('Consola')", "a = 13 + 14", "const lista - ['c', 1, 2, 3]", "console.log(lista)", "lista.shift()", "const proceso = new Object()", "proceso.nombre = 'Proceso 24'", "prompt('Ingresa un mensaje')"]
+const comandos = ["console.log('Consola')", "a = 13 + 14", "const lista = ['c', 1, 2, 3]", "console.log(lista)", "lista.shift()", "const proceso = new Object()", "proceso.nombre = 'Proceso 24'", "prompt('Ingresa un mensaje')"]
 
-function elegirComando() {
-    return comandos[Math.floor(Math.random() * comandos.length)]
+function elegirComandos() {
+    const lista = []
+    const cantidad = Math.floor(Math.random() * comandos.length) + 1
+
+    for (let i = 0; i < cantidad; i++) lista.push(comandos[Math.floor(Math.random() * comandos.length)])
+
+    return lista
 }
 
 function inicializarSimulacion(numeroProcesos) {
     const procesos = []
-    let cantidadComandos = 2;
 
     for (let i = 0; i < numeroProcesos; i++) {
-        const lista = []
-        for (let j = 0; j < cantidadComandos; j++) lista.push(elegirComando())
-
         procesos.push({
             numero: i + 1,
-            lista: lista
+            lista: elegirComandos()
         })
-
-        cantidadComandos += 1
     }
 
     return procesos
